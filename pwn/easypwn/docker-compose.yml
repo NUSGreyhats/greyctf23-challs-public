@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  easypwn:
+    build: setup
+    ports:
+      - "10533:10533"

@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  monkeytype:
+    build: .
+    ports:
+      - "12321:10000"
+

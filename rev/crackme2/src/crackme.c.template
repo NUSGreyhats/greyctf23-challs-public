@@ -1,0 +1,636 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <asm/unistd.h>
+#include <string.h>
+
+#include "crackme.h"
+
+unsigned int ENC_CODE_MARKER[] = { 0xbeefbeef, 0xf00df00d };
+unsigned int ENC_CODE[] = {<ENC CODE>};
+#define STARTING_ID <STARTING ID>
+#define STARTING_KEY <STARTING KEY>
+
+void print_success()
+{
+    puts("Correct flag!");
+    exit(0);
+}
+
+void print_failure()
+{
+    puts("Wrong flag :(");
+    exit(0);
+}
+
+#define CALL_SUCCESS asm volatile("call *%0\n":: "r" (print_success):)
+#define CALL_FAILURE asm volatile("call *%0\n":: "r" (print_failure):)
+#define CALL_FUNC(FUNC) asm volatile("call *%0\n":: "r" (FUNC):)
+
+#define TRAMP_STACK_SIZE 32
+
+void *mmap_wrapper(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+{
+    void *result;
+
+    asm volatile(
+        "movq %%rcx, %%r10\n"
+        "movq $9, %%rax\n"       // syscall number for mmap
+        "syscall\n"             // invoke the syscall
+        "movq %%rax, %0\n"       // store the result in 'result'
+        : "=r" (result)
+        :
+        : "%rax", "%rdi", "%rsi", "%rdx", "%r10", "%r8", "%r9", "memory"
+    );
+
+    return result;
+}
+
+int munmap_wrapper(void *addr, size_t length) {
+    int result;
+
+    asm volatile(
+        "movq $11, %%rax\n"   // syscall number for munmap
+        "syscall\n"         // invoke the syscall
+        "movl %%eax, %0\n"   // store the result in 'result'
+        : "=r" (result)
+        :
+        : "%rax", "%rdi", "%rsi", "memory"
+    );
+
+    return result;
+}
+
+void codewriter(unsigned int* mem, unsigned int key, int id)
+{
+    size_t len = ENC_CODE[id];
+    for (size_t i = 0 ; i < len; ++i)
+    {
+        mem[i] = ENC_CODE[id + 1 + i] ^ key;
+    }
+}
+
+void trampoline(int (*mem)(void), int id)
+{
+    unsigned int key = STARTING_KEY;
+start:
+    // asm volatile("popq %%r12\npopq %%r13\n":::"%r12", "%r13");
+
+    // asm volatile("addq $16, %%rsp;":::);
+    // Use the allocated memory region
+    codewriter((unsigned int*)mem, key, id);
+    id = mem();
+    asm volatile("movl %%ecx, %0\n": "=r" (key)::"memory");
+    goto start;
+}
+
+
+int f512(char* flag)
+{
+    // Allocate the memory region
+    size_t size = 4096;  // Size of the memory region in bytes
+    void* addr = NULL;   // Desired starting address (let the system choose)
+    void* mem = mmap_wrapper(addr, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (mem == MAP_FAILED) {
+        CALL_FAILURE;
+    }
+
+    asm volatile("pushq %0\n":: "r" (trampoline):);
+    trampoline(mem, STARTING_ID);
+
+    // Free the memory region when done
+    if (munmap(mem, size) == -1) {
+        CALL_FAILURE;
+    }
+}
+
+int main(int argc, char** argv)
+{
+    if (argc != 2)
+    {
+        printf("Usage: %s [grey{...}]\n", argv[0]);
+        exit(0);
+    }
+
+    if (strlen(argv[1]) >= 128) 
+    {
+        puts("The flag isn't so long. You will overflow the program...");
+    }
+    char flag[128]; strcpy(flag, argv[1]);
+    printf("%d\n", f0(0));
+
+    return 0;
+}
+
+int f0(char* flag) { f1(flag); }
+int f1(char* flag) { f2(flag); }
+int f2(char* flag) { f3(flag); }
+int f3(char* flag) { f4(flag); }
+int f4(char* flag) { f5(flag); }
+int f5(char* flag) { f6(flag); }
+int f6(char* flag) { f7(flag); }
+int f7(char* flag) { f8(flag); }
+int f8(char* flag) { f9(flag); }
+int f9(char* flag) { f10(flag); }
+int f10(char* flag) { f11(flag); }
+int f11(char* flag) { f12(flag); }
+int f12(char* flag) { f13(flag); }
+int f13(char* flag) { f14(flag); }
+int f14(char* flag) { f15(flag); }
+int f15(char* flag) { f16(flag); }
+int f16(char* flag) { f17(flag); }
+int f17(char* flag) { f18(flag); }
+int f18(char* flag) { f19(flag); }
+int f19(char* flag) { f20(flag); }
+int f20(char* flag) { f21(flag); }
+int f21(char* flag) { f22(flag); }
+int f22(char* flag) { f23(flag); }
+int f23(char* flag) { f24(flag); }
+int f24(char* flag) { f25(flag); }
+int f25(char* flag) { f26(flag); }
+int f26(char* flag) { f27(flag); }
+int f27(char* flag) { f28(flag); }
+int f28(char* flag) { f29(flag); }
+int f29(char* flag) { f30(flag); }
+int f30(char* flag) { f31(flag); }
+int f31(char* flag) { f32(flag); }
+int f32(char* flag) { f33(flag); }
+int f33(char* flag) { f34(flag); }
+int f34(char* flag) { f35(flag); }
+int f35(char* flag) { f36(flag); }
+int f36(char* flag) { f37(flag); }
+int f37(char* flag) { f38(flag); }
+int f38(char* flag) { f39(flag); }
+int f39(char* flag) { f40(flag); }
+int f40(char* flag) { f41(flag); }
+int f41(char* flag) { f42(flag); }
+int f42(char* flag) { f43(flag); }
+int f43(char* flag) { f44(flag); }
+int f44(char* flag) { f45(flag); }
+int f45(char* flag) { f46(flag); }
+int f46(char* flag) { f47(flag); }
+int f47(char* flag) { f48(flag); }
+int f48(char* flag) { f49(flag); }
+int f49(char* flag) { f50(flag); }
+int f50(char* flag) { f51(flag); }
+int f51(char* flag) { f52(flag); }
+int f52(char* flag) { f53(flag); }
+int f53(char* flag) { f54(flag); }
+int f54(char* flag) { f55(flag); }
+int f55(char* flag) { f56(flag); }
+int f56(char* flag) { f57(flag); }
+int f57(char* flag) { f58(flag); }
+int f58(char* flag) { f59(flag); }
+int f59(char* flag) { f60(flag); }
+int f60(char* flag) { f61(flag); }
+int f61(char* flag) { f62(flag); }
+int f62(char* flag) { f63(flag); }
+int f63(char* flag) { f64(flag); }
+int f64(char* flag) { f65(flag); }
+int f65(char* flag) { f66(flag); }
+int f66(char* flag) { f67(flag); }
+int f67(char* flag) { f68(flag); }
+int f68(char* flag) { f69(flag); }
+int f69(char* flag) { f70(flag); }
+int f70(char* flag) { f71(flag); }
+int f71(char* flag) { f72(flag); }
+int f72(char* flag) { f73(flag); }
+int f73(char* flag) { f74(flag); }
+int f74(char* flag) { f75(flag); }
+int f75(char* flag) { f76(flag); }
+int f76(char* flag) { f77(flag); }
+int f77(char* flag) { f78(flag); }
+int f78(char* flag) { f79(flag); }
+int f79(char* flag) { f80(flag); }
+int f80(char* flag) { f81(flag); }
+int f81(char* flag) { f82(flag); }
+int f82(char* flag) { f83(flag); }
+int f83(char* flag) { f84(flag); }
+int f84(char* flag) { f85(flag); }
+int f85(char* flag) { f86(flag); }
+int f86(char* flag) { f87(flag); }
+int f87(char* flag) { f88(flag); }
+int f88(char* flag) { f89(flag); }
+int f89(char* flag) { f90(flag); }
+int f90(char* flag) { f91(flag); }
+int f91(char* flag) { f92(flag); }
+int f92(char* flag) { f93(flag); }
+int f93(char* flag) { f94(flag); }
+int f94(char* flag) { f95(flag); }
+int f95(char* flag) { f96(flag); }
+int f96(char* flag) { f97(flag); }
+int f97(char* flag) { f98(flag); }
+int f98(char* flag) { f99(flag); }
+int f99(char* flag) { f100(flag); }
+int f100(char* flag) { f101(flag); }
+int f101(char* flag) { f102(flag); }
+int f102(char* flag) { f103(flag); }
+int f103(char* flag) { f104(flag); }
+int f104(char* flag) { f105(flag); }
+int f105(char* flag) { f106(flag); }
+int f106(char* flag) { f107(flag); }
+int f107(char* flag) { f108(flag); }
+int f108(char* flag) { f109(flag); }
+int f109(char* flag) { f110(flag); }
+int f110(char* flag) { f111(flag); }
+int f111(char* flag) { f112(flag); }
+int f112(char* flag) { f113(flag); }
+int f113(char* flag) { f114(flag); }
+int f114(char* flag) { f115(flag); }
+int f115(char* flag) { f116(flag); }
+int f116(char* flag) { f117(flag); }
+int f117(char* flag) { f118(flag); }
+int f118(char* flag) { f119(flag); }
+int f119(char* flag) { f120(flag); }
+int f120(char* flag) { f121(flag); }
+int f121(char* flag) { f122(flag); }
+int f122(char* flag) { f123(flag); }
+int f123(char* flag) { f124(flag); }
+int f124(char* flag) { f125(flag); }
+int f125(char* flag) { f126(flag); }
+int f126(char* flag) { f127(flag); }
+int f127(char* flag) { f128(flag); }
+int f128(char* flag) { f129(flag); }
+int f129(char* flag) { f130(flag); }
+int f130(char* flag) { f131(flag); }
+int f131(char* flag) { f132(flag); }
+int f132(char* flag) { f133(flag); }
+int f133(char* flag) { f134(flag); }
+int f134(char* flag) { f135(flag); }
+int f135(char* flag) { f136(flag); }
+int f136(char* flag) { f137(flag); }
+int f137(char* flag) { f138(flag); }
+int f138(char* flag) { f139(flag); }
+int f139(char* flag) { f140(flag); }
+int f140(char* flag) { f141(flag); }
+int f141(char* flag) { f142(flag); }
+int f142(char* flag) { f143(flag); }
+int f143(char* flag) { f144(flag); }
+int f144(char* flag) { f145(flag); }
+int f145(char* flag) { f146(flag); }
+int f146(char* flag) { f147(flag); }
+int f147(char* flag) { f148(flag); }
+int f148(char* flag) { f149(flag); }
+int f149(char* flag) { f150(flag); }
+int f150(char* flag) { f151(flag); }
+int f151(char* flag) { f152(flag); }
+int f152(char* flag) { f153(flag); }
+int f153(char* flag) { f154(flag); }
+int f154(char* flag) { f155(flag); }
+int f155(char* flag) { f156(flag); }
+int f156(char* flag) { f157(flag); }
+int f157(char* flag) { f158(flag); }
+int f158(char* flag) { f159(flag); }
+int f159(char* flag) { f160(flag); }
+int f160(char* flag) { f161(flag); }
+int f161(char* flag) { f162(flag); }
+int f162(char* flag) { f163(flag); }
+int f163(char* flag) { f164(flag); }
+int f164(char* flag) { f165(flag); }
+int f165(char* flag) { f166(flag); }
+int f166(char* flag) { f167(flag); }
+int f167(char* flag) { f168(flag); }
+int f168(char* flag) { f169(flag); }
+int f169(char* flag) { f170(flag); }
+int f170(char* flag) { f171(flag); }
+int f171(char* flag) { f172(flag); }
+int f172(char* flag) { f173(flag); }
+int f173(char* flag) { f174(flag); }
+int f174(char* flag) { f175(flag); }
+int f175(char* flag) { f176(flag); }
+int f176(char* flag) { f177(flag); }
+int f177(char* flag) { f178(flag); }
+int f178(char* flag) { f179(flag); }
+int f179(char* flag) { f180(flag); }
+int f180(char* flag) { f181(flag); }
+int f181(char* flag) { f182(flag); }
+int f182(char* flag) { f183(flag); }
+int f183(char* flag) { f184(flag); }
+int f184(char* flag) { f185(flag); }
+int f185(char* flag) { f186(flag); }
+int f186(char* flag) { f187(flag); }
+int f187(char* flag) { f188(flag); }
+int f188(char* flag) { f189(flag); }
+int f189(char* flag) { f190(flag); }
+int f190(char* flag) { f191(flag); }
+int f191(char* flag) { f192(flag); }
+int f192(char* flag) { f193(flag); }
+int f193(char* flag) { f194(flag); }
+int f194(char* flag) { f195(flag); }
+int f195(char* flag) { f196(flag); }
+int f196(char* flag) { f197(flag); }
+int f197(char* flag) { f198(flag); }
+int f198(char* flag) { f199(flag); }
+int f199(char* flag) { f200(flag); }
+int f200(char* flag) { f201(flag); }
+int f201(char* flag) { f202(flag); }
+int f202(char* flag) { f203(flag); }
+int f203(char* flag) { f204(flag); }
+int f204(char* flag) { f205(flag); }
+int f205(char* flag) { f206(flag); }
+int f206(char* flag) { f207(flag); }
+int f207(char* flag) { f208(flag); }
+int f208(char* flag) { f209(flag); }
+int f209(char* flag) { f210(flag); }
+int f210(char* flag) { f211(flag); }
+int f211(char* flag) { f212(flag); }
+int f212(char* flag) { f213(flag); }
+int f213(char* flag) { f214(flag); }
+int f214(char* flag) { f215(flag); }
+int f215(char* flag) { f216(flag); }
+int f216(char* flag) { f217(flag); }
+int f217(char* flag) { f218(flag); }
+int f218(char* flag) { f219(flag); }
+int f219(char* flag) { f220(flag); }
+int f220(char* flag) { f221(flag); }
+int f221(char* flag) { f222(flag); }
+int f222(char* flag) { f223(flag); }
+int f223(char* flag) { f224(flag); }
+int f224(char* flag) { f225(flag); }
+int f225(char* flag) { f226(flag); }
+int f226(char* flag) { f227(flag); }
+int f227(char* flag) { f228(flag); }
+int f228(char* flag) { f229(flag); }
+int f229(char* flag) { f230(flag); }
+int f230(char* flag) { f231(flag); }
+int f231(char* flag) { f232(flag); }
+int f232(char* flag) { f233(flag); }
+int f233(char* flag) { f234(flag); }
+int f234(char* flag) { f235(flag); }
+int f235(char* flag) { f236(flag); }
+int f236(char* flag) { f237(flag); }
+int f237(char* flag) { f238(flag); }
+int f238(char* flag) { f239(flag); }
+int f239(char* flag) { f240(flag); }
+int f240(char* flag) { f241(flag); }
+int f241(char* flag) { f242(flag); }
+int f242(char* flag) { f243(flag); }
+int f243(char* flag) { f244(flag); }
+int f244(char* flag) { f245(flag); }
+int f245(char* flag) { f246(flag); }
+int f246(char* flag) { f247(flag); }
+int f247(char* flag) { f248(flag); }
+int f248(char* flag) { f249(flag); }
+int f249(char* flag) { f250(flag); }
+int f250(char* flag) { f251(flag); }
+int f251(char* flag) { f252(flag); }
+int f252(char* flag) { f253(flag); }
+int f253(char* flag) { f254(flag); }
+int f254(char* flag) { f255(flag); }
+int f255(char* flag) { f256(flag); }
+int f256(char* flag) { f257(flag); }
+int f257(char* flag) { f258(flag); }
+int f258(char* flag) { f259(flag); }
+int f259(char* flag) { f260(flag); }
+int f260(char* flag) { f261(flag); }
+int f261(char* flag) { f262(flag); }
+int f262(char* flag) { f263(flag); }
+int f263(char* flag) { f264(flag); }
+int f264(char* flag) { f265(flag); }
+int f265(char* flag) { f266(flag); }
+int f266(char* flag) { f267(flag); }
+int f267(char* flag) { f268(flag); }
+int f268(char* flag) { f269(flag); }
+int f269(char* flag) { f270(flag); }
+int f270(char* flag) { f271(flag); }
+int f271(char* flag) { f272(flag); }
+int f272(char* flag) { f273(flag); }
+int f273(char* flag) { f274(flag); }
+int f274(char* flag) { f275(flag); }
+int f275(char* flag) { f276(flag); }
+int f276(char* flag) { f277(flag); }
+int f277(char* flag) { f278(flag); }
+int f278(char* flag) { f279(flag); }
+int f279(char* flag) { f280(flag); }
+int f280(char* flag) { f281(flag); }
+int f281(char* flag) { f282(flag); }
+int f282(char* flag) { f283(flag); }
+int f283(char* flag) { f284(flag); }
+int f284(char* flag) { f285(flag); }
+int f285(char* flag) { f286(flag); }
+int f286(char* flag) { f287(flag); }
+int f287(char* flag) { f288(flag); }
+int f288(char* flag) { f289(flag); }
+int f289(char* flag) { f290(flag); }
+int f290(char* flag) { f291(flag); }
+int f291(char* flag) { f292(flag); }
+int f292(char* flag) { f293(flag); }
+int f293(char* flag) { f294(flag); }
+int f294(char* flag) { f295(flag); }
+int f295(char* flag) { f296(flag); }
+int f296(char* flag) { f297(flag); }
+int f297(char* flag) { f298(flag); }
+int f298(char* flag) { f299(flag); }
+int f299(char* flag) { f300(flag); }
+int f300(char* flag) { f301(flag); }
+int f301(char* flag) { f302(flag); }
+int f302(char* flag) { f303(flag); }
+int f303(char* flag) { f304(flag); }
+int f304(char* flag) { f305(flag); }
+int f305(char* flag) { f306(flag); }
+int f306(char* flag) { f307(flag); }
+int f307(char* flag) { f308(flag); }
+int f308(char* flag) { f309(flag); }
+int f309(char* flag) { f310(flag); }
+int f310(char* flag) { f311(flag); }
+int f311(char* flag) { f312(flag); }
+int f312(char* flag) { f313(flag); }
+int f313(char* flag) { f314(flag); }
+int f314(char* flag) { f315(flag); }
+int f315(char* flag) { f316(flag); }
+int f316(char* flag) { f317(flag); }
+int f317(char* flag) { f318(flag); }
+int f318(char* flag) { f319(flag); }
+int f319(char* flag) { f320(flag); }
+int f320(char* flag) { f321(flag); }
+int f321(char* flag) { f322(flag); }
+int f322(char* flag) { f323(flag); }
+int f323(char* flag) { f324(flag); }
+int f324(char* flag) { f325(flag); }
+int f325(char* flag) { f326(flag); }
+int f326(char* flag) { f327(flag); }
+int f327(char* flag) { f328(flag); }
+int f328(char* flag) { f329(flag); }
+int f329(char* flag) { f330(flag); }
+int f330(char* flag) { f331(flag); }
+int f331(char* flag) { f332(flag); }
+int f332(char* flag) { f333(flag); }
+int f333(char* flag) { f334(flag); }
+int f334(char* flag) { f335(flag); }
+int f335(char* flag) { f336(flag); }
+int f336(char* flag) { f337(flag); }
+int f337(char* flag) { f338(flag); }
+int f338(char* flag) { f339(flag); }
+int f339(char* flag) { f340(flag); }
+int f340(char* flag) { f341(flag); }
+int f341(char* flag) { f342(flag); }
+int f342(char* flag) { f343(flag); }
+int f343(char* flag) { f344(flag); }
+int f344(char* flag) { f345(flag); }
+int f345(char* flag) { f346(flag); }
+int f346(char* flag) { f347(flag); }
+int f347(char* flag) { f348(flag); }
+int f348(char* flag) { f349(flag); }
+int f349(char* flag) { f350(flag); }
+int f350(char* flag) { f351(flag); }
+int f351(char* flag) { f352(flag); }
+int f352(char* flag) { f353(flag); }
+int f353(char* flag) { f354(flag); }
+int f354(char* flag) { f355(flag); }
+int f355(char* flag) { f356(flag); }
+int f356(char* flag) { f357(flag); }
+int f357(char* flag) { f358(flag); }
+int f358(char* flag) { f359(flag); }
+int f359(char* flag) { f360(flag); }
+int f360(char* flag) { f361(flag); }
+int f361(char* flag) { f362(flag); }
+int f362(char* flag) { f363(flag); }
+int f363(char* flag) { f364(flag); }
+int f364(char* flag) { f365(flag); }
+int f365(char* flag) { f366(flag); }
+int f366(char* flag) { f367(flag); }
+int f367(char* flag) { f368(flag); }
+int f368(char* flag) { f369(flag); }
+int f369(char* flag) { f370(flag); }
+int f370(char* flag) { f371(flag); }
+int f371(char* flag) { f372(flag); }
+int f372(char* flag) { f373(flag); }
+int f373(char* flag) { f374(flag); }
+int f374(char* flag) { f375(flag); }
+int f375(char* flag) { f376(flag); }
+int f376(char* flag) { f377(flag); }
+int f377(char* flag) { f378(flag); }
+int f378(char* flag) { f379(flag); }
+int f379(char* flag) { f380(flag); }
+int f380(char* flag) { f381(flag); }
+int f381(char* flag) { f382(flag); }
+int f382(char* flag) { f383(flag); }
+int f383(char* flag) { f384(flag); }
+int f384(char* flag) { f385(flag); }
+int f385(char* flag) { f386(flag); }
+int f386(char* flag) { f387(flag); }
+int f387(char* flag) { f388(flag); }
+int f388(char* flag) { f389(flag); }
+int f389(char* flag) { f390(flag); }
+int f390(char* flag) { f391(flag); }
+int f391(char* flag) { f392(flag); }
+int f392(char* flag) { f393(flag); }
+int f393(char* flag) { f394(flag); }
+int f394(char* flag) { f395(flag); }
+int f395(char* flag) { f396(flag); }
+int f396(char* flag) { f397(flag); }
+int f397(char* flag) { f398(flag); }
+int f398(char* flag) { f399(flag); }
+int f399(char* flag) { f400(flag); }
+int f400(char* flag) { f401(flag); }
+int f401(char* flag) { f402(flag); }
+int f402(char* flag) { f403(flag); }
+int f403(char* flag) { f404(flag); }
+int f404(char* flag) { f405(flag); }
+int f405(char* flag) { f406(flag); }
+int f406(char* flag) { f407(flag); }
+int f407(char* flag) { f408(flag); }
+int f408(char* flag) { f409(flag); }
+int f409(char* flag) { f410(flag); }
+int f410(char* flag) { f411(flag); }
+int f411(char* flag) { f412(flag); }
+int f412(char* flag) { f413(flag); }
+int f413(char* flag) { f414(flag); }
+int f414(char* flag) { f415(flag); }
+int f415(char* flag) { f416(flag); }
+int f416(char* flag) { f417(flag); }
+int f417(char* flag) { f418(flag); }
+int f418(char* flag) { f419(flag); }
+int f419(char* flag) { f420(flag); }
+int f420(char* flag) { f421(flag); }
+int f421(char* flag) { f422(flag); }
+int f422(char* flag) { f423(flag); }
+int f423(char* flag) { f424(flag); }
+int f424(char* flag) { f425(flag); }
+int f425(char* flag) { f426(flag); }
+int f426(char* flag) { f427(flag); }
+int f427(char* flag) { f428(flag); }
+int f428(char* flag) { f429(flag); }
+int f429(char* flag) { f430(flag); }
+int f430(char* flag) { f431(flag); }
+int f431(char* flag) { f432(flag); }
+int f432(char* flag) { f433(flag); }
+int f433(char* flag) { f434(flag); }
+int f434(char* flag) { f435(flag); }
+int f435(char* flag) { f436(flag); }
+int f436(char* flag) { f437(flag); }
+int f437(char* flag) { f438(flag); }
+int f438(char* flag) { f439(flag); }
+int f439(char* flag) { f440(flag); }
+int f440(char* flag) { f441(flag); }
+int f441(char* flag) { f442(flag); }
+int f442(char* flag) { f443(flag); }
+int f443(char* flag) { f444(flag); }
+int f444(char* flag) { f445(flag); }
+int f445(char* flag) { f446(flag); }
+int f446(char* flag) { f447(flag); }
+int f447(char* flag) { f448(flag); }
+int f448(char* flag) { f449(flag); }
+int f449(char* flag) { f450(flag); }
+int f450(char* flag) { f451(flag); }
+int f451(char* flag) { f452(flag); }
+int f452(char* flag) { f453(flag); }
+int f453(char* flag) { f454(flag); }
+int f454(char* flag) { f455(flag); }
+int f455(char* flag) { f456(flag); }
+int f456(char* flag) { f457(flag); }
+int f457(char* flag) { f458(flag); }
+int f458(char* flag) { f459(flag); }
+int f459(char* flag) { f460(flag); }
+int f460(char* flag) { f461(flag); }
+int f461(char* flag) { f462(flag); }
+int f462(char* flag) { f463(flag); }
+int f463(char* flag) { f464(flag); }
+int f464(char* flag) { f465(flag); }
+int f465(char* flag) { f466(flag); }
+int f466(char* flag) { f467(flag); }
+int f467(char* flag) { f468(flag); }
+int f468(char* flag) { f469(flag); }
+int f469(char* flag) { f470(flag); }
+int f470(char* flag) { f471(flag); }
+int f471(char* flag) { f472(flag); }
+int f472(char* flag) { f473(flag); }
+int f473(char* flag) { f474(flag); }
+int f474(char* flag) { f475(flag); }
+int f475(char* flag) { f476(flag); }
+int f476(char* flag) { f477(flag); }
+int f477(char* flag) { f478(flag); }
+int f478(char* flag) { f479(flag); }
+int f479(char* flag) { f480(flag); }
+int f480(char* flag) { f481(flag); }
+int f481(char* flag) { f482(flag); }
+int f482(char* flag) { f483(flag); }
+int f483(char* flag) { f484(flag); }
+int f484(char* flag) { f485(flag); }
+int f485(char* flag) { f486(flag); }
+int f486(char* flag) { f487(flag); }
+int f487(char* flag) { f488(flag); }
+int f488(char* flag) { f489(flag); }
+int f489(char* flag) { f490(flag); }
+int f490(char* flag) { f491(flag); }
+int f491(char* flag) { f492(flag); }
+int f492(char* flag) { f493(flag); }
+int f493(char* flag) { f494(flag); }
+int f494(char* flag) { f495(flag); }
+int f495(char* flag) { f496(flag); }
+int f496(char* flag) { f497(flag); }
+int f497(char* flag) { f498(flag); }
+int f498(char* flag) { f499(flag); }
+int f499(char* flag) { f500(flag); }
+int f500(char* flag) { f501(flag); }
+int f501(char* flag) { f502(flag); }
+int f502(char* flag) { f503(flag); }
+int f503(char* flag) { f504(flag); }
+int f504(char* flag) { f505(flag); }
+int f505(char* flag) { f506(flag); }
+int f506(char* flag) { f507(flag); }
+int f507(char* flag) { f508(flag); }
+int f508(char* flag) { f509(flag); }
+int f509(char* flag) { f510(flag); }
+int f510(char* flag) { f511(flag); }
+int f511(char* flag) { f512(flag); }

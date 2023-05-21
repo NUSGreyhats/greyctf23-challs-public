@@ -1,0 +1,16 @@
+FROM python:3.9.16-bullseye
+
+WORKDIR /app
+
+ENV FLAG=grey{I_4m_hum4n_n0w_059e3995f03a783dae82580ec144ad16}
+
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 5000
+
+# Run in gunicorn
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]

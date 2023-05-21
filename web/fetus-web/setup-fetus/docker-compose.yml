@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  shero:
+    build: .
+    ports:
+        - "12325:80"

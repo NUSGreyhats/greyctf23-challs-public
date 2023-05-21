@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  write-me-a-book:
+    image: write-me-a-book
+    build: ./setup-write-me-a-book
+    privileged: true
+    ports:
+      - "12346:5000"

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  gotcha_app:
+    build: ./app
+    container_name: gotcha_app
+    networks:
+      - gotcha
+
+  nginx-gotcha:
+    build: ./nginx
+    ports:
+      - "5003:80"
+    depends_on:
+      - gotcha_app
+    networks:
+      - gotcha
+
+networks:
+  gotcha:
+    driver: bridge

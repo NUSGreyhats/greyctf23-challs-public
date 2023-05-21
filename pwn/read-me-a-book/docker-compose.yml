@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  read-me-a-book:
+    image: read-me-a-book
+    build: ./setup-read-me-a-book
+    privileged: true
+    ports:
+      - "12344:5000"

@@ -1,0 +1,47 @@
+version: '3.7'
+
+x-common-variables: &common-variables
+   ADMIN_COOKIE: b02472dcc72fc41d291fb5621a1e0f1bc1ec26d5d3a84b6809a83725faa02b3a6d039070ad000b05f804fdc3c361e4492561f92931efebbe1fbdf41a6e99fabc6a8ed9e15a392c61847f69a13fb9e5832819d41576ee8c1e606c99189335e6eccd329f1f420f2644b58af9ce154f4bc9ebe3594be7f7ecc39b58252bfe94e46bdd9d71cc8c3ccbea13a0557244e5b3ef1a7f9211f1b13517eb0d1adb89ef1cec357bdf5ec8f23318ee3804f619b835ed82dd7cabb45b6ec6a8eb60d6dd6ccec0732d9dd44269e442fe529b320d24cc578adee213399899bb436dbb1c0278a446957ebbbdb10da0293a98dc52795cb49ae15816719dd3805cf430a31c3306026c9b76656b923c0cca082295090889eaee44efa4ae3a86eb79aecb5cdd7f74fc3af6758ff1ff77372d6429a86f
+   FLAG: grey{d0ubl3_ch3ck_y0ur_3ndp0ints_in_m1cr0s3rv1c3s}
+
+
+services:
+  admin:
+    build: ./admin_page
+    container_name: admin_page
+    environment:
+       <<: *common-variables
+    networks:
+      - backend
+  homepage:
+    build: ./homepage
+    container_name: home_page
+    environment:
+       <<: *common-variables
+    networks:
+      - backend
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - 5004:80
+    networks:
+      - backend
+  gateway2:
+    build: ./gateway
+    container_name: gateway2
+    ports:
+      - 5014:80
+    networks:
+      - backend
+  gateway3:
+    build: ./gateway
+    container_name: gateway3
+    ports:
+      - 5024:80
+    networks:
+      - backend
+
+
+networks:
+  backend: {}

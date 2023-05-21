@@ -1,0 +1,37 @@
+version: '3.7'
+
+x-common-variables: &common-variables
+   FLAG: grey{55t1_bl4ck1ist_byp455_t0_S5rf_538ad457e9a85747631b250e834ac12d}
+
+
+services:
+  admin:
+    build: ./admin_page
+    container_name: radminpage
+    networks:
+      - backend
+
+  homepage:
+    build: ./homepage
+    container_name: rhomepage
+    networks:
+      - backend
+
+  gateway:
+    build: ./gateway
+    container_name: rgateway
+    ports:
+      - 5005:80
+    networks:
+      - backend
+
+  flag:
+    build: ./flag_page
+    container_name: rflagpage
+    environment:
+       <<: *common-variables
+    networks:
+      - backend
+
+networks:
+  backend: {}

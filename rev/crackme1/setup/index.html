@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <title>Crackme 1</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        canvas {
+            width: 512px;
+            height: 512px;
+            border: 1px solid black;
+            border-radius: 5px;
+            /* Add additional styles for the canvas */
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            /* Add additional styles for the input box */
+        }
+
+
+        .submit-button {
+            margin-top: 10px;
+            padding: 9px 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            /* Add additional styles for the submit button */
+        }
+
+        .submit-button:hover {
+        background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <div class="input-container">
+      <input id="textInput" type="text" placeholder="Enter Key">
+      <button id="submitButton" class="submit-button">Submit</button>
+    </div>
+
+    <p id="flag"></p>
+
+    <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webgl2fundamentals.org/webgl/resources/m4.js"></script>
+    <script src="/app.js"></script>
+</body>
+
+</html>

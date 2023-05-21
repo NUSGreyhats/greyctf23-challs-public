@@ -1,0 +1,11 @@
+FROM golang:1.20
+
+WORKDIR /usr/src/app
+
+ENV FLAG "grey{r3v3rs1ng_g0l4ng_n0_pr0bl3m}"
+
+COPY . .
+RUN go build -v -o /usr/local/bin/app ./server.go
+
+EXPOSE 8080
+CMD ["app"]

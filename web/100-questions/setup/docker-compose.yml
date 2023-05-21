@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  greyctfchall:
+    image: greyctfchall
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "10512:5002"

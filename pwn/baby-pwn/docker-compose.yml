@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  baby-pwn:
+    image: baby-pwn
+    build: ./setup-baby-pwn
+    privileged: true
+    ports:
+      - "10541:5000"

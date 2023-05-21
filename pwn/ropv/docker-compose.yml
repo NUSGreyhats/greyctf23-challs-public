@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  ropv:
+    build: setup
+    ports:
+      - "12335:12335"

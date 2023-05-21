@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  arraystore:
+    build: setup
+    privileged: true
+    ports:
+      - "10546:10546"

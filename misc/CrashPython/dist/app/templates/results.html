@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Results</h1>
+    <p class="lead">
+        The status of you code is shown below. It will refresh every 5 seconds
+    </p>
+    <ol>
+        <li>Status {{status.get('id')}}: {{status.get('description')}}</li>
+        <li>Token: {{token}}</li>
+        <li>Memory Usage: {{memory}}</li>
+        <li>Message: {{message}}</li>
+    </ol>
+    <h3>Standard Output: </h3>
+    <pre>{{stdout}}</pre>
+    <h3>Standard Error:</h3>
+    <pre>{{stderr}}</pre>
+    <a class="btn btn-primary" href="/">Back</a>
+    <script>
+        // Refresh every 5 seconds if id is 1
+        if (`{{status.get('id')}}` == `1`) {
+            setTimeout(function () {
+                location.reload();
+            }, 5000);
+        }
+    </script>
+</div>
+{% endblock %}

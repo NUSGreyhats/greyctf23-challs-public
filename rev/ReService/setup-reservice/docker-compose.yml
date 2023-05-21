@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  reservice:
+    build: ./service
+    ports:
+      - 5010:8080

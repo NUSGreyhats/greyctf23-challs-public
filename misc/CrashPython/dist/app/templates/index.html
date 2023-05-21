@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>CrashPython</h1>
+    <p class="lead">
+        I made a code executor in python.
+        <br />
+        If you can crash it I'll give you a reward. Here are some banned words.
+    </p>
+    <details>
+        <pre>{{banned_words}}</pre>
+    </details>
+    <p class="lead">
+        I'll even give you my source code.
+    </p>
+    <details>
+        <pre>{{source_code}}</pre>
+    </details>
+    <br />
+    <form action="/" method="post">
+        <div class="mb-3">
+            <label for="code_submission" class="form-label">Code submission</label>
+            <textarea class="form-control" id="code_submission" rows="5" name="code"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

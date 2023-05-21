@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    
+    build: ./setup-baby-web
+    ports:
+      - "5006:5000"
+    environment:
+      - FLAG=grey{b4by_x55_347cbd01cbc74d13054b20f55ea6a42c}
+    

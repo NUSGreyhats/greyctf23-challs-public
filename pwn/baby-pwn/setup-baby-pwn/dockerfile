@@ -1,0 +1,9 @@
+FROM pwn.red/jail
+
+# copy / from <some image> to /srv
+COPY --from=ubuntu / /srv
+
+COPY ./baby_pwn /srv/app/run
+RUN chmod +x /srv/app/run
+
+EXPOSE 5000
