@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  pwn:
+    build: ./deploy
+    privileged: true
+    container_name: rop-baby
+    ports:
+      - "32111:5000"

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+/bin/busybox --install -s
+rm /linuxrc
+
+stty raw -echo
+
+chown -R 0:0 /
+chmod -R 400 /root
+
+mkdir -p /proc && mount -t proc none /proc
+mkdir -p /dev  && mount -t devtmpfs devtmpfs /dev
+mkdir -p /tmp  && mount -t tmpfs tmpfs /tmp
+
+echo 2 > /proc/sys/kernel/kptr_restrict
+echo 1 > /proc/sys/kernel/dmesg_restrict
+chmod 400 /proc/kallsyms
+
+touch /etc/passwd /etc/group
+adduser -H -D -u 0 root
+adduser -H -D -u 1000 user
+
+insmod /root/dean.ko
+chmod 666 /dev/dean

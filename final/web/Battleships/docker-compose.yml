@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+    server:
+        build: ./top-battleship-server
+        restart: always
+        ports:
+            - "19611:19611"
+            - "19610:80"
+    client:
+        build: ./top-battleship
+        network_mode: service:server

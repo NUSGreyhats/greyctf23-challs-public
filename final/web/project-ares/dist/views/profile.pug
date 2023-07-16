@@ -1,0 +1,26 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title #{name} - Profile
+    link(rel="stylesheet", href="/style.profile.css")
+
+  body
+    header
+      h1 Project Ares
+
+    main
+      h2 #{name}'s Profile
+      p Age: #{age}
+      p Gender: #{gender}
+      p Dislikes: #{dislikes}
+      p Most Annoying Celebrity: #{celebrity}
+      p Bio:
+      p.bio #{bio}
+
+      p 
+        a(href="/submit/" + id) Submit Profile
+        a(href="/delete/" + id) Delete Profile
+
+    footer
+      p Any resemblance to actual organisations or persons, living or dead, is purely coincidental.

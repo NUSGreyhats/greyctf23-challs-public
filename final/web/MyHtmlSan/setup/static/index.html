@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Html Hosting Service</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Html Hosting Service</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div id="alert" class="alert alert-primary" role="alert">
+      This is still under construction and is incomplete.
+    </div>
+
+    <div class="container mt-5">
+      <div class="jumbotron">
+        <h1 class="display-4">Welcome to my Html Hosting Service</h1>
+        <p class="lead">
+          I have learnt from the recent Live Overflow video about HTML
+          Sanitization, so I begun to make my own HTML Hosting service.
+        </p>
+      </div>
+      <form method="post" action="/upload">
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">HTML Code</label>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            name="message"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+      <details>
+        <iframe
+          class="container"
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/HUtkW2gjC8Q"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </details>
+    </div>
+
+    <hr class="my-4" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

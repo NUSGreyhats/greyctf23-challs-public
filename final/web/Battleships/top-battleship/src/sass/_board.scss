@@ -1,0 +1,87 @@
+@use 'base';
+@use 'mixins';
+
+.board {
+  --board-dimension: 10;
+  --board-gap: 1px;
+  --board-padding: 22px;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--board-dimension), 1fr);
+  grid-template-rows: repeat(var(--board-dimension), 1fr);
+  height: fit-content;
+  width: clamp(300px, 100%, 490px);
+  gap: var(--board-gap);
+  background-color: var(--color-primary);
+
+  border-radius: 15px;
+  padding: var(--board-padding);
+
+  &__ship-placement {
+    position: relative;
+  }
+
+  &__self,
+  &__opponent {
+    & .board__label {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      margin-bottom: 10px;
+
+      font-size: var(--text-xs);
+      font-family: var(--font-press-start);
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--color-square-border);
+  border-radius: 3px;
+
+  background-color: var(--color-background);
+
+  &__placement-origin:hover,
+  &__placement-origin:active {
+    background-color: var(--color-square-place-origin);
+  }
+
+  &__placement-adjacent {
+    background-color: var(--color-square-place-adjacent);
+  }
+
+  &__filled {
+    background-color: var(--color-square-filled);
+    cursor: not-allowed;
+  }
+
+  &__base {
+    background-color: var(--color-square-base);
+  }
+
+  &__base:hover {
+    background-color: var(--color-square-base-hover);
+  }
+
+  &__damaged {
+    background-color: var(--color-square-damaged);
+  }
+
+  &__damaged:hover {
+    cursor: not-allowed;
+  }
+
+  &__has-ship {
+    background-color: var(--color-square-has-ship);
+  }
+
+  &__sunken {
+    background-color: var(--color-square-sunken);
+  }
+}

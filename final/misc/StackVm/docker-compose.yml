@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: stackVM
+    build: ./setup
+    ports:
+      - "32002:8000"
+    volumes:
+      - ./db:/app/instance
+    environment:
+      - FLAG=grey{I_4m_st4ck3d_8d2eb04fa1d274e509e4ec9b70b240e65a0c61b0c1daaa81a1aace02e0b9bfa4}
+

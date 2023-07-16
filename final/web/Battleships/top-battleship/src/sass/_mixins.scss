@@ -1,0 +1,12 @@
+%center-all-children {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+%absolute-element__center-self {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

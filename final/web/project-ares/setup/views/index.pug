@@ -1,0 +1,61 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Project Ares
+    link(rel="stylesheet", href="/style.css")
+
+  body
+    header
+      h1 Project Ares
+
+    main
+      section.hero
+        h2 Hate. Enmity.
+        p Our algorithm hasn't won any Nobel prizes but it sure as hell works
+
+        h2 By Haters. For Haters.
+        p Designed to help haters like you find their next worst enemy
+
+      section.features
+        h3 Process
+        ul
+          li Fill in profile
+          li Send for review
+          li Get matched with your enemy
+
+      section.testimonials
+        h3 Testimonials
+        .testimonial
+          p "Finding enemies through this website has allowed me to elevate my hating to a whole new level. Thank you Project Ares!"
+          p.author - Silky Johnson
+
+      section.cta
+        h3 Ready to get started?
+        p Enter your profile below to get started 
+
+        form(action="/signup", method="POST")
+          label(for="name") Name:
+          input(type="text", id="name", name="name", required)
+
+          label(for="age") Age:
+          input(type="number", id="age", name="age", required)
+
+          label(for="gender") Gender:
+          select(id="gender", name="gender", required)
+            option(value="male") Male
+            option(value="other") Everything else
+
+          label(for="dislikes") Dislikes:
+          textarea(id="dislikes", name="dislikes", required)
+
+          label(for="celebrity") Most Hated Celebrity:
+          input(type="text", id="celebrity", name="celebrity", required)
+
+          label(for="bio") Bio:
+          textarea(id="bio", name="bio", rows="4", required)
+
+          button(type="submit") Sign Up
+
+    footer
+      p Any resemblance to actual organisations or persons, living or dead, is purely coincidental.

@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  pwn:
+    privileged: true
+    build: ./deploy
+    container_name: fast-af-calculator
+    ports:
+      - "19123:5000"

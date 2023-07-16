@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  warmup:
+    build: .
+    ports:
+      - "32112:10000"
+

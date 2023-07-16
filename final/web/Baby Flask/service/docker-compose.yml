@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  baby-flask:
+    container_name: baby-flask
+    image: baby-flask
+    build:
+      context: .
+    ports:
+      - 19999:5000

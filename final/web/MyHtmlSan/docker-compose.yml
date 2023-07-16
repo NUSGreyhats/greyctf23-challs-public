@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./setup
+    container_name: myhtmlsan
+    ports:
+      - "32004:8080"
+
+    

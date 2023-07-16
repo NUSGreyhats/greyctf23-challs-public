@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  codestinks:
+    image: codestinks
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 32222:3000
+
+  ares-bot:
+    image: ares-bot
+    build:
+      context: ./bot
+      dockerfile: ./Dockerfile.bot
+    environment:
+      FLAG: grey{dont_pAsS_uS3r_oBj3C7s_To_R3nder_fc4fc28280f702d24b0243c1571f96f1}
+      BASE_URL: http://codestinks:3000

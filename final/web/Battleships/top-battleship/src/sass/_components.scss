@@ -1,0 +1,137 @@
+@use 'base';
+
+.btn {
+  --color-btn-background: #eeeeee;
+
+  font-family: var(--font-press-start);
+  color: var(--color-grey-dark-1);
+  text-transform: uppercase;
+  font-size: var(--text-xs);
+
+  width: fit-content;
+  padding: 20px 30px;
+  border-radius: 50px;
+  background-color: var(--color-btn-background);
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset,
+    var(--color-primary) 0px 0px 0px 2px;
+
+  &:active {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 6px;
+  }
+
+  &:hover {
+    background-color: var(--color-accent);
+    color: var(--color-grey-light-1);
+  }
+
+  &__rotate-ship {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px 25px;
+    width: 100%;
+
+    & .btn__rotate-label {
+      font-size: var(--text-xs);
+    }
+
+    & .key-shortcut {
+      border: 1px solid currentColor;
+      border-radius: 5px;
+      width: fit-content;
+      padding: 7px;
+
+      font-size: var(--text-xxs);
+    }
+  }
+}
+
+.switch {
+  --switch-width: 64px;
+  --switch-height: calc(var(--switch-width) / 2);
+  --switch-padding: 3px;
+
+  --switch-animation-duration: 0.2s;
+
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  width: var(--switch-width, 64px);
+  height: var(--switch-height, 32px);
+  border-radius: 50em;
+  padding: var(--switch-padding, 0);
+
+  transform: scale(0.8);
+
+  &__input,
+  &__Label {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  &__input {
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    pointer-events: none;
+  }
+
+  &__input:checked + &__label {
+    background-color: hsl(228, 74%, 61%);
+    background-color: var(--color-primary);
+  }
+
+  &__input:checked + &__label + &__marker {
+    left: calc(100% - 23px);
+  }
+
+  &__input:focus + &__label,
+  &__input:active + &__label {
+    --color-shadow: hsla(228, 74%, 61%, 0.2);
+    box-shadow: 0 0 0 3px var(--color-shadow, hsla(228, 74%, 61%, 0.2));
+  }
+
+  &__input:focus + &__label,
+  &__input:active + &__label {
+    box-shadow: 0 0 0 3px var(--color-shadow, hsla(228, 74%, 61%, 0.2));
+  }
+
+  &__label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: hsl(240, 1%, 83%);
+    background-color: var(--color-grey-light-3);
+    border-radius: inherit;
+    z-index: 1;
+    transition: background 0.2s;
+    transition: background var(--switch-animation-duration);
+  }
+
+  &__marker {
+    position: relative;
+    background-color: white;
+    width: calc(var(--switch-height) - var(--switch-padding) * 2.5);
+    height: calc(var(--switch-height) - var(--switch-padding) * 2.5);
+    border-radius: 50%;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    left: var(--switch-padding);
+    transition: left 0.2s;
+    transition: left var(--switch-animation-duration);
+    will-change: left;
+  }
+}

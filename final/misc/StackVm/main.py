@@ -1,0 +1,89 @@
+from dist import StackVM
+
+# Test case for fib
+test_cases = [
+    # Format of (input, fib output)
+    (0, 0),
+    (1, 1),
+    (2, 1),
+    (3, 2),
+    (4, 3),
+    (5, 5),
+    (6, 8),
+    (7, 13),
+    (8, 21),
+    (9, 34),
+    (10, 55),
+
+    # Exponentially larger test cases
+    (20, 6765),
+    (30, 832040),
+    (40, 63245986),
+    (70, 190392490709135),
+    (100, 354224848179261915075),
+    (200, 280571172992510140037611932413038677189525),
+    (300, 222232244629420445529739893461909967206666939096499764990979600),
+    (400, 176023680645013966468226945392411250770384383304492191886725992896575345044216019675),
+    (500, 139423224561697880139724382870407283950070256587697307264108962948325571622863290691557658876222521294125)
+
+]
+
+# Example usage: Adder
+vm = StackVM()
+add = """DUP
+SWAP 0 2
+DUP
+SWAP 1 2
+NAND
+DUP
+NAND
+SWAP 0 2
+DUP
+SWAP 0 2
+DUP
+SWAP 1 2
+DUP
+NAND
+NAND
+SWAP 0 2
+DUP
+SWAP 0 2
+DUP
+SWAP 1 2
+SWAP 0 1
+DUP
+NAND
+NAND
+SWAP 0 2
+POP
+POP
+NAND
+SWAP 0 1
+PUSH 1
+SHIFT
+DUP
+JNE 0
+POP"""
+program = f"""
+PUSH 0
+PUSH 0
+POP
+PUSH 1
+PRINT
+{add}
+PRINT
+SWAP 0 1
+DUP
+SWAP 0 2
+DUP
+SWAP 1 2
+NAND
+JNE 3
+"""
+args = [1]
+# vm.run(program, args)
+# print(vm.stack)
+vm.run("SWAP 0 0\n", args)
+result = vm.stack[-1]
+print(vm.stack)
+print(f"Result: {result}")

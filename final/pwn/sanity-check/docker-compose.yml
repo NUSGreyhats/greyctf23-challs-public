@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  pwn:
+    build: ./deploy
+    container_name: sanity-check
+    ports:
+      - "32110:5000"

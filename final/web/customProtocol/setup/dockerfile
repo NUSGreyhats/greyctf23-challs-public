@@ -1,0 +1,19 @@
+FROM golang:1.20
+
+RUN apt-get update && apt-get upgrade -y
+
+
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+COPY . .
+
+RUN go mod tidy
+RUN CGO_ENABLED=0 GOOS=linux go build -o /main .
+
+ENV FLAG=grey{c43sar_g0t_4n_1nj3cti0n_f4618314c4d25169f5735ca0d4a29e41}
+
+EXPOSE 8080
+
+CMD ["/main"]

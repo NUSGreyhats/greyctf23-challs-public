@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Raleway&family=Rammetto+One&family=Press+Start+2P&family=Squada+One&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+
+        <title>Battleship</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="header__logo">BATTLESHIP</h1>
+
+            <div class="switch">
+                <input class="switch__input" type="checkbox" id="themeSwitch" />
+                <label aria-hidden="true" class="switch__label" for="themeSwitch">On</label>
+                <div aria-hidden="true" class="switch__marker"></div>
+            </div>
+        </header>
+        <main class="container">
+            <div class="screen screen__start">
+                <div class="message message__start">
+                    We need help in defeating the opposing forces in this war. Will you be willing to command our
+                    forces?
+                </div>
+                <form action="" method="" class="form__player-name">
+                    <label for="player-name" class="label__player-name"> Enter your name here if you accept: </label>
+                    <input
+                        type="text"
+                        class="input__player-name"
+                        id="player-name"
+                        placeholder="Enter your name here"
+                        value="Combatant"
+                        maxlength="250"
+                        onclick="this.select()"
+                        required
+                    />
+                    <label for="room-id" class="label__room-id"> Enter room ID here (leave blank for new room): </label>
+                    <input
+                        type="text"
+                        class="input__room-id"
+                        id="room-id"
+                        placeholder="Enter room ID here"
+                        maxlength="20"
+                        onclick="this.select()"
+                    />
+                    <button type="submit" class="btn btn__start">Enter Battle</button>
+                </form>
+            </div>
+
+            <div class="screen screen__waiting-room hidden">
+                <div class="message message__room-message">Waiting for another player...</div>
+            </div>
+
+            <div class="screen screen__ship-placement hidden">
+                <div class="message message__ship-placement">Place your ships on the board</div>
+                <div class="ships__display">
+                    <div class="ship__wrapper ship__wrapper-active" data-ship="carrier">
+                        <span class="ship__label">Carrier</span>
+                        <div class="ship__icon-wrapper">
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                        </div>
+                    </div>
+                    <div class="ship__wrapper" data-ship="battleship">
+                        <span class="ship__label">Battleship</span>
+                        <div class="ship__icon-wrapper">
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                        </div>
+                    </div>
+                    <div class="ship__wrapper" data-ship="destroyer">
+                        <span class="ship__label">Destroyer</span>
+                        <div class="ship__icon-wrapper">
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                        </div>
+                    </div>
+                    <div class="ship__wrapper" data-ship="submarine">
+                        <span class="ship__label">Submarine</span>
+                        <div class="ship__icon-wrapper">
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                        </div>
+                    </div>
+                    <div class="ship__wrapper" data-ship="patroller">
+                        <span class="ship__label">Patroller</span>
+                        <div class="ship__icon-wrapper">
+                            <div class="ship__icon-square"></div>
+                            <div class="ship__icon-square"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="board board__ship-placement"></div>
+                <div class="btn-container__ship-placement">
+                    <button type="button" class="btn btn__rotate-ship">
+                        <div class="btn__rotate-label">Rotate Ship</div>
+                        <div class="key-shortcut">SPACE</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="screen screen__game-display hidden">
+                <div class="game-display__board-wrapper">
+                    <div class="board board__self"></div>
+                    <div class="board board__opponent"></div>
+                    <div class="overlay overlay__winner-display hidden">
+                        <span class="message message__winner-main">The winner is YES!</span>
+                        <span class="message message__winner-sub">Congratulations! You have defeated the might</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <a href="https://github.com/renchester" target="_blank" class="footer__link" rel="noopener noreferrer"
+                ><img src="./img/github-icon.png" alt="Github icon" width="25" class="footer__img" />
+                <p class="footer__desc">Originally developed by Renchester Ramos</p></a
+            >
+        </footer>
+
+        <div class="overlay"></div>
+    </body>
+</html>

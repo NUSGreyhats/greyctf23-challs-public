@@ -1,0 +1,33 @@
+FROM python:3.8.16-bullseye
+
+WORKDIR /app
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install cmake -y
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN openssl rand -base64 48 > passphrase.txt
+
+# Generate a Private Key
+RUN openssl genrsa -aes128 -passout file:passphrase.txt -out server.key 2048
+
+# Generate a CSR (Certificate Signing Request)
+RUN openssl req -new -passin file:passphrase.txt -key server.key -out server.csr \
+    -subj "/C=FR/O=krkr/OU=Domain Control Validated/CN=*.krkr.io"
+
+# Remove Passphrase from Key
+RUN cp server.key server.key.org
+RUN openssl rsa -in server.key.org -passin file:passphrase.txt -out server.key
+
+# Generating a Self-Signed Certificate for 100 years
+RUN openssl x509 -req -days 36500 -in server.csr -signkey server.key -out server.crt
+
+RUN mv server.crt /app/ssl.crt
+RUN mv server.key /app/ssl.key
+
+# Run in gunicorn
+ENTRYPOINT ["gunicorn", "--keyfile", "/app/ssl.key", "--certfile", "/app/ssl.crt","app:app", "-b", "0.0.0.0:443"]

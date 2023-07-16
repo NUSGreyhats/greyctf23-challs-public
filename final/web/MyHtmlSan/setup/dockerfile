@@ -1,0 +1,21 @@
+FROM golang:1.20
+
+RUN apt-get update && apt-get upgrade -y && apt-get install libgtk2.0-0 libsm6 libnss3 -y
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt install ./google-chrome-stable_current_amd64.deb -y
+
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+COPY . .
+
+RUN go mod tidy
+RUN CGO_ENABLED=0 GOOS=linux go build -o /main .
+
+ENV FLAG=grey{r3geX_1s_N0t_4_htm1_cee664daa169f7cdb53f87ab810ccb15}
+
+EXPOSE 8080
+
+CMD ["/main"]

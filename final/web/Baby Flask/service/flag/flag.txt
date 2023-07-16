@@ -1,0 +1,1 @@
+greyctf{(ssti|W1th|M1n1m41|Ch425)+}

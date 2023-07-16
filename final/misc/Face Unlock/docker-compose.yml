@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: face-unlock
+    build: ./setup
+    ports:
+      - "32001:443"
+    environment:
+      - FLAG=greyctf{f4c3d_with_pr0bl3ms_9cd73c8bd213adf0443834f771a583db}

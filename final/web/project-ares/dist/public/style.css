@@ -1,0 +1,158 @@
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Basic styles for the header */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  /* Basic styles for the main content */
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  
+  /* Styles for the hero section */
+  section.hero {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  section.hero h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles for the features section */
+  section.features {
+    margin-bottom: 40px;
+  }
+  
+  section.features h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  section.features ul {
+    list-style: disc;
+    padding-left: 20px;
+  }
+  
+  /* Styles for the testimonials section */
+  section.testimonials {
+    margin-bottom: 40px;
+  }
+  
+  section.testimonials h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .testimonial {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial p {
+    margin-bottom: 10px;
+  }
+  
+  .testimonial .author {
+    text-align: right;
+  }
+  
+  /* Styles for the CTA section */
+  section.cta {
+    text-align: center;
+  }
+  
+  section.cta h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles for the form */
+  form {
+    margin-top: 20px;
+  }
+  
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  form button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Basic styles for the footer */
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  footer p {
+    margin: 0;
+  }
+  
+  /* Media query for small screens */
+  @media screen and (max-width: 600px) {
+    main {
+      padding: 0 10px;
+    }
+  
+    header h1 {
+      font-size: 24px;
+    }
+  
+    section.hero h2 {
+      font-size: 22px;
+    }
+  
+    section.features h3 {
+      font-size: 22px;
+    }
+  
+    section.testimonials h3 {
+      font-size: 22px;
+    }
+  
+    section.cta h3 {
+      font-size: 22px;
+    }
+  
+    footer p {
+      font-size: 12px;
+    }
+  }
+  

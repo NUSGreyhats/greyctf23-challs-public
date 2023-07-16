@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>StackVM High Scores</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-4">StackVM High Scores</h1>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        {% for type, message in messages %}
+        <div class="alert alert-{{type}}" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      <div class="mt-4">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Cases Passed</th>
+              <th scope="col">Code length</th>
+              <th scope="col">Instructions executed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in scores %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ entry.name }}</td>
+              <td>{{ entry.passed }}/{{ total_tests }}</td>
+              <td>{{ entry.length }}</td>
+              <td>{{ entry.execution_len }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4">
+        <h2>Add New Submission</h2>
+        <p>Scoring is by max test cases solved followed by length of code.</p>
+        <p>Write Fibonacci in our VM language and solve as many cases as possible.</p>
+        <form action="/api/stackvm" method="POST">
+          <div class="form-group">
+            <label for="name">Team name:</label>
+            <!-- A Drop down for names-->
+            <select name="name" id="name" class="form-control" required>
+              <option value="" disabled selected>Select a team</option>
+              {% for name in teams %}
+              <option value="{{ name }}">{{ name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="code">Code:</label>
+            <textarea
+              class="form-control"
+              id="code"
+              name="code"
+              rows="10"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
